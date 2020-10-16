@@ -51,7 +51,7 @@ namespace balkezesek
                 hibas = false;
                 Console.Write("Kérek egy 1990 és 1999 közötti évszámot: ");
                 evszam = Convert.ToInt32(Console.ReadLine());
-                if (evszam <1990 || evszam >1999)
+                if (evszam < 1990 || evszam > 1999)
                 {
                     hibas = true; 
                     Console.Write("Hibás adat! ");
@@ -64,7 +64,9 @@ namespace balkezesek
             double atlag = 0;
             foreach (var b in balkezek)
             {
-                if (Convert.ToInt32(b.Elso.Substring(0,4))<=evszam && Convert.ToInt32(b.Utolso.Substring(0,4)) >=evszam)
+                if (Convert.ToInt32(b.Elso.Substring(0,4))<=evszam 
+                    && 
+                    Convert.ToInt32(b.Utolso.Substring(0,4)) >=evszam)
                 {
                     db++;
                     atlag += b.Suly;
@@ -73,13 +75,30 @@ namespace balkezesek
             Console.WriteLine($"{atlag / db:N2} font");
         }
 
+        static void feladat7()
+        {
+            var nevek = from b in balkezek
+                        orderby b.Nev
+                        group b by b.Nev[0] into abc
+                        select abc;
+
+            foreach (var abckiir in nevek)
+            {
+                Console.WriteLine(abckiir.Key);
+                foreach (var item  in abckiir)
+                {
+                    Console.WriteLine($"\t{item.Nev}");
+                }
+            }
+        }
+
         static void Main(string[] args)
         {
             feladat2();
             feladat3();
             feladat4();
-
             feladat56();
+            feladat7();
 
 
 
